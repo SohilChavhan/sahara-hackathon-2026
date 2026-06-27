@@ -111,7 +111,7 @@ export default function App() {
     }]);
 
     try {
-      const response = await fetch('http://localhost:5000/api/generate-grievance', {
+      const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/generate-grievance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
 
