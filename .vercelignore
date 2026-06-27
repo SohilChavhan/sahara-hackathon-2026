@@ -1,0 +1,8 @@
+main.py
+requirements.txt
+patients.csv
+admissions.csv
+billing.csv
+*.py
+venv/
+__pycache__/
