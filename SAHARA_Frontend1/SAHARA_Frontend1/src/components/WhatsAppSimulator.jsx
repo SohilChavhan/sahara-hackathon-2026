@@ -37,7 +37,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         setIsTyping(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/web-chat', {
+            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/web-chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMsg.text })
@@ -129,7 +129,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         formData.append('audio', audioBlob, 'voice_note.webm');
 
         try {
-            const response = await fetch('http://localhost:5000/api/voice-chat', {
+            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/voice-chat', {
                 method: 'POST',
                 body: formData,
             });
@@ -188,7 +188,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
 
         try {
 
-            const response = await fetch('http://localhost:5000/api/process-document', {
+            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/process-document', {
                 method: 'POST',
                 body: formData,
             });
@@ -197,7 +197,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
             if (result.error) throw new Error(result.error);
             const { diagnosis, urgency } = result.data;
 
-            const routeResponse = await fetch('http://localhost:5000/api/route-hospital', {
+            const routeResponse = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/route-hospital', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ diagnosis: diagnosis, urgency: urgency || "High" })
