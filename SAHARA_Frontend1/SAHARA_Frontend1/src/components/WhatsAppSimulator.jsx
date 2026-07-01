@@ -37,7 +37,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         setIsTyping(true);
 
         try {
-            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/web-chat', {
+            const response = await fetch('https://sahara-backend.onrender.com/api/web-chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMsg.text })
