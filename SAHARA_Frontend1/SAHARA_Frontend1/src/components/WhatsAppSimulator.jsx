@@ -188,7 +188,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
 
         try {
 
-            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/process-document', {
+            const response = await fetch('https://sahara-backend.onrender.com/api/web-chat', {
                 method: 'POST',
                 body: formData,
             });
@@ -197,7 +197,7 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
             if (result.error) throw new Error(result.error);
             const { diagnosis, urgency } = result.data;
 
-            const routeResponse = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/route-hospital', {
+            const routeResponse = await fetch('https://sahara-backend.onrender.com/api/route-hospital', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ diagnosis: diagnosis, urgency: urgency || "High" })
