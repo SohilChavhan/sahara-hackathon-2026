@@ -16,7 +16,7 @@ export default function AshaDashboard({ cases, updateCaseProgress, addNewCase })
   const handleRoutePatient = async () => {
     setIsRouting(true);
     try {
-      const response = await fetch('http://localhost:5000/api/route-hospital', {
+      const response = await fetch('https://sahara-backend.onrender.com/api/route-hospital', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
