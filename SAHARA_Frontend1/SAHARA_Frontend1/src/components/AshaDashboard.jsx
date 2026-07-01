@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Activity, MapPin, Bed, CheckCircle, Plus, X, UserPlus } from 'lucide-react';
+import { apiJson } from '../lib/api';
 
 export default function AshaDashboard({ cases, updateCaseProgress, addNewCase }) {
   const [routingResult, setRoutingResult] = useState(null);
@@ -16,7 +17,7 @@ export default function AshaDashboard({ cases, updateCaseProgress, addNewCase })
   const handleRoutePatient = async () => {
     setIsRouting(true);
     try {
-      const response = await fetch('https://sahara-backend.onrender.com/api/route-hospital', {
+      const data = await apiJson('/api/route-hospital', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -24,7 +25,6 @@ export default function AshaDashboard({ cases, updateCaseProgress, addNewCase })
           urgency: activePatient.urgency || "High"
         })
       });
-      const data = await response.json();
       setRoutingResult(data.primary_recommendation);
     } catch (error) {
       console.error("Failed to route:", error);

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Paperclip, Camera, MoreVertical, Phone, Video, CheckCheck, Square, Play } from 'lucide-react';
+import { apiJson } from '../lib/api';
 
 export default function WhatsAppSimulator({ onNewPatient, messages, setMessages, currentUser }) {
 
@@ -37,12 +38,11 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         setIsTyping(true);
 
         try {
-            const response = await fetch('https://sahara-backend.onrender.com/api/web-chat', {
+            const data = await apiJson('/api/web-chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMsg.text })
             });
-            const data = await response.json();
 
             const isIndependentPatient = currentUser?.role === 'patient' || !currentUser;
 
@@ -129,14 +129,11 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         formData.append('audio', audioBlob, 'voice_note.webm');
 
         try {
-            // FIXED: Removed the weird markdown brackets from this URL
-            const response = await fetch('https://sahara-backend.onrender.com/api/voice-chat', {
+            const data = await apiJson('/api/voice-chat', {
                 method: 'POST',
                 body: formData,
+                timeoutMs: 60000,
             });
-
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
 
             let botAudioUrl = null;
             if (data.audio_base64) {
@@ -188,22 +185,19 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         formData.append('document', file);
 
         try {
-            // FIXED: Pointed this back to the correct /api/process-document endpoint
-            const response = await fetch('https://sahara-backend.onrender.com/api/process-document', {
+            const result = await apiJson('/api/process-document', {
                 method: 'POST',
                 body: formData,
+                timeoutMs: 60000,
             });
 
-            const result = await response.json();
-            if (result.error) throw new Error(result.error);
             const { diagnosis, urgency } = result.data;
 
-            const routeResponse = await fetch('https://sahara-backend.onrender.com/api/route-hospital', {
+            const routeData = await apiJson('/api/route-hospital', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ diagnosis: diagnosis, urgency: urgency || "High" })
             });
-            const routeData = await routeResponse.json();
 
             const bestHospital = routeData.primary_recommendation;
 

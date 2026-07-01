@@ -99,42 +99,7 @@ export default function App() {
     }
   ])
 
-  const handleGenerateGrievance = async () => {
-    setIsTyping(true);
-    const userMsgId = Date.now();
 
-    setMessages(prev => [...prev, {
-      id: userMsgId,
-      text: "My name is missing from the PM-JAY list. Can you help me?",
-      sender: 'user',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }]);
-
-    try {
-      const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/generate-grievance', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-
-        body: JSON.stringify({ name: "Ramesh Kumar", condition: "Cancer" })
-      });
-
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
-
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        text: `Here is a formal grievance letter I drafted for you. Please print this, fill in the bracketed details, and submit it to the Ayushman Mitra at your nearest government hospital:\n\n------------------------\n\n${data.letter}`,
-        sender: 'bot',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }]);
-
-    } catch (error) {
-      console.error("Grievance API Error:", error);
-      setMessages(prev => [...prev, { id: Date.now() + 1, text: "⚠️ Failed to generate the document.", sender: 'bot', time: '' }]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
 
   const addNewCase = (newCase) => {
     setCases((prev) => [newCase, ...prev])
