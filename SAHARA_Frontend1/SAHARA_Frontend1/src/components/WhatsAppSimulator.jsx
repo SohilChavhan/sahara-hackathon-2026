@@ -129,7 +129,8 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         formData.append('audio', audioBlob, 'voice_note.webm');
 
         try {
-            const response = await fetch('[https://sahara-backend.onrender.com](https://sahara-backend.onrender.com)/api/voice-chat', {
+            // FIXED: Removed the weird markdown brackets from this URL
+            const response = await fetch('https://sahara-backend.onrender.com/api/voice-chat', {
                 method: 'POST',
                 body: formData,
             });
@@ -187,8 +188,8 @@ export default function WhatsAppSimulator({ onNewPatient, messages, setMessages,
         formData.append('document', file);
 
         try {
-
-            const response = await fetch('https://sahara-backend.onrender.com/api/web-chat', {
+            // FIXED: Pointed this back to the correct /api/process-document endpoint
+            const response = await fetch('https://sahara-backend.onrender.com/api/process-document', {
                 method: 'POST',
                 body: formData,
             });
