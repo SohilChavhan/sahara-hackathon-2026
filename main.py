@@ -39,7 +39,7 @@ print("Here are the models you can use:")
 for m in genai.list_models():
     if 'generateContent' in m.supported_generation_methods:
         print(m.name)
-gemini_model = genai.GenerativeModel('gemini-2.5-flash')
+gemini_model = genai.GenerativeModel('gemini-1.5-flash')
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
