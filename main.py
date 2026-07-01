@@ -228,6 +228,9 @@ def handle_voice_chat():
 @app.route('/api/process-document', methods=['POST'])
 def process_document():
     """Takes a medical document image, extracts text via OCR, and parses medical NLP."""
+    # 2. ADD THIS PRE-FLIGHT CHECK
+    if request.method == 'OPTIONS':
+        return '', 200
     if 'document' not in request.files:
         return jsonify({"error": "No document provided"}), 400
 
